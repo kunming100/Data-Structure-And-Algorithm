@@ -56,19 +56,47 @@ function insert(data, position) {
   if (position > this.length || position < 0) return false;
   const node = new CreateNode(data);
   let current = this.head;
-  let prev = null;
-  let index = 0;
-  while (index <= position) {
-    if (index === position) {
-      prev.next = node;
-      node.next = current;
-      this.length += 1;
-    } else {
-      prev = current;
-      current = current.next;
-    }
-    index += 1;
-  }
+	if (position === 0) {
+		this.head = node;
+		node.next = current;
+	} else {
+		let prev = null;
+		let index = 0;
+		while (index <= position) {
+			if (index === position) {
+				prev.next = node;
+				node.next = current;
+				this.length += 1;
+			} else {
+				prev = current;
+				current = current.next;
+			}
+			index += 1;
+		}
+	}
+}
+
+/**
+ * 获取链表子节点
+ * @param {number} position
+ */
+function getNode(position) {
+	let result = null;
+	if (position < 0 || position >= this.length) return result;
+	if (position === 0) {
+		result = this.head;
+	} else {
+		let index = 0;
+		let current = this.head;
+		while(index <= position) {
+			if (index === position) {
+				result = current;
+			}
+			current = current.next;
+			index += 1;
+		}
+	}
+	return result;
 }
 
 /**
@@ -87,6 +115,7 @@ function toString() {
 LinkList.prototype.append = append;
 LinkList.prototype.toString = toString;
 LinkList.prototype.insert = insert;
+LinkList.prototype.getNode = getNode;
 
 const linkList = new LinkList();
 linkList.append(1);
@@ -95,6 +124,7 @@ linkList.append(3);
 linkList.append(4);
 console.log(linkList.length);
 console.log(linkList.toString());
-linkList.insert(5, 1);
+linkList.insert(5, 2);
 console.log(linkList.length);
 console.log(linkList.toString());
+console.log(linkList.getNode(4));
